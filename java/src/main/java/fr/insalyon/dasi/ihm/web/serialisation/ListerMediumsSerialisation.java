@@ -45,11 +45,7 @@ public class ListerMediumsSerialisation extends Serialisation{
             container.add("mediums", jsonMediums);
         }
 
-        response.setContentType("application/json;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        gson.toJson(container, out);
-        out.close();
+        sendJson(response,container);
     }
     
 }
