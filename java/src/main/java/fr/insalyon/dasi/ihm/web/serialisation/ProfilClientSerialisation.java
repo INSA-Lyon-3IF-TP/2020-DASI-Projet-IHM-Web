@@ -27,19 +27,26 @@ public class ProfilClientSerialisation extends Serialisation {
 
         if (client != null) {
             JsonObject jsonClient = new JsonObject();
+            JsonObject jsonProfilAstral = new JsonObject();
             jsonClient.addProperty("id", client.getId());
             jsonClient.addProperty("nom", client.getNom());
             jsonClient.addProperty("prenom", client.getPrenom());
+            jsonClient.addProperty("civilite", client.getCivilite());
+            jsonClient.addProperty("dateDeNaissance", client.getDateDeNaissance().toString());
             jsonClient.addProperty("mail", client.getMail());
+            jsonClient.addProperty("telephone", client.getTelephone());
+            jsonClient.addProperty("adresse", client.getAdresse());
+            
+            jsonProfilAstral.addProperty("signeZodiaque", client.getProfilAstral().getSigneZodiaque());
+            jsonProfilAstral.addProperty("signeChinois", client.getProfilAstral().getSigneChinois());
+            jsonProfilAstral.addProperty("couleur", client.getProfilAstral().getCouleur());
+            jsonProfilAstral.addProperty("animal", client.getProfilAstral().getAnimal());
 
             container.add("client", jsonClient);
+            container.add("profil-astral", jsonProfilAstral);
         }
 
-        response.setContentType("application/json;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        gson.toJson(container, out);
-        out.close();
+        sendJson(response,container);
     }
 
 }

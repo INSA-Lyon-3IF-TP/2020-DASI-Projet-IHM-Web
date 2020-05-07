@@ -6,9 +6,13 @@ import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.GetConsultationEnAttenteAction;
 import fr.insalyon.dasi.ihm.web.action.GetStatisticsAction;
-import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
 import fr.insalyon.dasi.ihm.web.serialisation.GetStatisticsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InfosConsultationSerialisation;
+import fr.insalyon.dasi.ihm.web.action.GetProfilClientAction;
+import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
+import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
+import fr.insalyon.dasi.ihm.web.serialisation.GetProfilClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListerMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilEmployeSerialisation;
@@ -71,6 +75,14 @@ public class ActionServlet extends HttpServlet {
                 case "getStatistics":
                     action = new GetStatisticsAction();
                     serialisation = new GetStatisticsSerialisation();
+                case "inscription":
+                    action = new InscrireClientAction();
+                    serialisation = new InscrireClientSerialisation();
+                    break;
+                case "profilClient":
+                    action = new GetProfilClientAction();
+                    serialisation = new GetProfilClientSerialisation();
+                    break;
                 case "...":
                     break;
             }
