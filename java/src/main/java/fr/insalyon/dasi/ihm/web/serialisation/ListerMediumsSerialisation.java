@@ -9,8 +9,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import fr.insalyon.dasi.metier.modele.Astrologue;
+import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.Genre;
 import fr.insalyon.dasi.metier.modele.Medium;
+import fr.insalyon.dasi.metier.modele.Spirite;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -30,19 +33,37 @@ public class ListerMediumsSerialisation extends Serialisation{
         JsonObject container = new JsonObject();
 
         if (!mediums.isEmpty()) {
-            JsonArray jsonMediums = new JsonArray();
+            JsonArray astrologues = new JsonArray();
+            JsonArray cartomanciens = new JsonArray();
+            JsonArray spirites = new JsonArray();
             
             for(Medium medium : mediums){
                 JsonObject mediumJSON = new JsonObject();
                 mediumJSON.addProperty("denomination",medium.getDenomination());
-                String genre = (medium.getGenre().equals(Genre.Masculin) ? "Masculin" : "Féminin");
+                String genre = (medium.getGenre().equals(Genre.Masculin) ? "M" : "F");
                 mediumJSON.addProperty("genre", genre);
                 mediumJSON.addProperty("presentation",medium.getPresentation());
                 
-                jsonMediums.add(mediumJSON);
+                if(medium instanceof Astrologue){
+                    Astrologue astrologue = (Astrologue) medium;
+                    mediumJSON.addProperty("formation", astrologue.getFormation());
+                    mediumJSON.addProperty("promo", astrologue.getPromo());
+                    astrologues.add(mediumJSON);
+                }
+                else if(medium instanceof Cartomancien){
+                    cartomanciens.add(mediumJSON);
+                }
+                else if(medium instanceof Spirite){
+                    Spirite spirite = (Spirite) medium;
+                    mediumJSON.addProperty("support", spirite.getSupport());
+                    spirites.add(mediumJSON);
+                }
+                
             }
 
-            container.add("mediums", jsonMediums);
+            container.add("astrologues", astrologues);
+            container.add("cartomanciens", cartomanciens);
+            container.add("spirites", spirites);
         }
 
         response.setContentType("application/json;charset=UTF-8");
