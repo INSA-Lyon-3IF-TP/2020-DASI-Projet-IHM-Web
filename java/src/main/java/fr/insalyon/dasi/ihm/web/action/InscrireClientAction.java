@@ -21,6 +21,7 @@ public class InscrireClientAction extends Action{
 
     @Override
     public void executer(HttpServletRequest request) {
+        Long idClient = null;
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String mail = request.getParameter("mail");
@@ -29,6 +30,21 @@ public class InscrireClientAction extends Action{
         String tel = request.getParameter("tel");
         String adresse = request.getParameter("adresse");
         String password = request.getParameter("password");
+        String passwordConfirmation = request.getParameter("passwordConfirmation");
+        
+        if(nom.isEmpty() 
+            || prenom.isEmpty()
+            || mail.isEmpty()
+            || dateString.isEmpty()
+            || civilite.isEmpty()
+            || tel.isEmpty()
+            || adresse.isEmpty()
+            || password.isEmpty()
+            || !passwordConfirmation.equals(password)) // Vérification côté serveur
+        {
+            request.setAttribute("idClient", idClient);
+            return; 
+        }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -42,19 +58,9 @@ public class InscrireClientAction extends Action{
 
         Service service = new Service();
         Client client = new Client(nom, prenom, civilite, date, tel, adresse, mail, password);
-        Long idClient = service.inscrireClient(client);
+        idClient = service.inscrireClient(client);
 
         request.setAttribute("idClient", idClient);
-        request.setAttribute("client", client);
-        
-        // Gestion de la Session: ici, enregistrer l'ID du Client authentifié
-        HttpSession session = request.getSession();
-        if (idClient != null) {
-            session.setAttribute("idClient", client.getId());
-        }
-        else {
-            session.removeAttribute("idClient");
-        }
     }
     
 }

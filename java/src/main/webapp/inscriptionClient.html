@@ -65,7 +65,18 @@ and open the template in the editor.
                     var champTelephone = $('#champ-telephone').val();
                     var champAdresse = $('#champ-adresse').val();
                     
-
+                    if(champNom.length === 0 
+                        || champPrenom.length === 0
+                        || champMail.length === 0
+                        || champDate.length === 0
+                        || champCivilite.length === 0
+                        || champTelephone.length === 0
+                        || champAdresse.length === 0
+                        || champPassword.length === 0) //Vérification côté client
+                    {
+                        alert("Tous les champs doivent être remplis");
+                        return; 
+                    }
                     // Appel AJAX
                     $.ajax({
                         url: './ActionServlet',
@@ -79,18 +90,15 @@ and open the template in the editor.
                             civilite: champCivilite,
                             tel: champTelephone,
                             adresse: champAdresse,
-                            password: champPassword
+                            password: champPassword,
+                            passwordConfirmation: champPasswordConfirmation
                         },
                         dataType: 'json'
                     })
                     .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
                         console.log('Response',response); // LOG dans Console Javascript
-                        if (response.connexion) {
-                            //$('#notification').html("Connexion OK");  // Message pour le paragraphe de notification
-                            // TODO: afficher les informations du client dans la notification
-                            // Exemple: Connexion de Ada Lovelace (ID 1)
-                            var client = response.client;
-                            $('#notification').html("Inscription de " + client.prenom + " " + client.nom + " (ID " + client.id + ")");  // Message pour le paragraphe de notification
+                        if (response.inscription) {
+                            $('#notification').html("Inscription OK");  // Message pour le paragraphe de notification
                         }
                         else {
                             $('#notification').html("Erreur d'Inscription"); // Message pour le paragraphe de notification
