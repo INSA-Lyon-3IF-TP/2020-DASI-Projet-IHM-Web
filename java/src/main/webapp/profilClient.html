@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Profil Client</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    <body>
+        <h1>Profil Astral</h1>
+        <br/>
+        <p>Signe du Zodiac : <span id="zodiaque"></span></p>
+        <p>Signe Chinois : <span id="chinois"></span></p>
+        <p>Couleur : <span id="couleur"></span></p>
+        <p>Animal : <span id="animal"></span></p>
+        <br/>
+        <p><a href="index.html">Mediums</a></p>
+        <p><a href="index.html">Afficher l'historique de mes consultations</a></p>
+        
+        <script>
+            $(document).ready( function () {
+                
+                // Appel AJAX
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    data: {
+                        todo: 'profilClient'
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response',response); // LOG dans Console Javascript
+                    if (response.connexion) {
+                        $("#zodiaque").html(response.profilAstral.signeZodiaque);
+                        $("#chinois").html(response.profilAstral.signeChinois);
+                        $("#couleur").html(response.profilAstral.couleur);
+                        $("#animal").html(response.profilAstral.animal);
+                    }
+                    else {
+                        alert("Erreur de connexion"); // Message pour le paragraphe de notification
+                        // TODO rediriger vers la page de connexion
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                })
+                .always( function () { // Fonction toujours appelée
+
+                });
+            });
+        </script>
+    </body>
+</html>
