@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Consultation en Attente</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="profilClient">TODO write content profil client</div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'ActionServlet',
+                method: 'get',
+                dataType: 'json',
+                data: {'todo': 'getConsultationEnAttente'}
+            }).done(function (response) {
+                if(!response.connexion){
+                    window.location = "loginEmploye.html";
+                }
+                else if(!response.consultation){ //Si aucune consultation en cours pour l'employe courant
+                    window.location = "dashboard.html";
+                }
+                else{
+                    $('#profilClient').html("Consultation avec le client n° " + response.consultation.idClient);
+                }
+            });
+        });
+    </script>
+</html>
