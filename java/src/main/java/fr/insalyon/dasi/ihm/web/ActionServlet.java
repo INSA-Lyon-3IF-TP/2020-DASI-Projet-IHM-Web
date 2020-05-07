@@ -3,8 +3,10 @@ package fr.insalyon.dasi.ihm.web;
 import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
+import fr.insalyon.dasi.ihm.web.action.GetProfilClientAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
+import fr.insalyon.dasi.ihm.web.serialisation.GetProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListerMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
@@ -60,6 +62,11 @@ public class ActionServlet extends HttpServlet {
                 case "inscription":
                     action = new InscrireClientAction();
                     serialisation = new InscrireClientSerialisation();
+                    break;
+                case "profilClient":
+                    action = new GetProfilClientAction();
+                    serialisation = new GetProfilClientSerialisation();
+                    break;
                 case "...":
                     break;
             }
