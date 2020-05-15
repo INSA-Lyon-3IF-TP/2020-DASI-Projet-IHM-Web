@@ -12,6 +12,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.InfosConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.action.GetProfilClientAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
+import fr.insalyon.dasi.ihm.web.action.PrendreRendezVousAction;
 import fr.insalyon.dasi.ihm.web.serialisation.ConsultationsClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GetProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
@@ -74,9 +75,11 @@ public class ActionServlet extends HttpServlet {
                 case "getConsultationEnAttente":
                     action = new GetConsultationEnAttenteAction();
                     serialisation = new InfosConsultationSerialisation();
+                    break;
                 case "getStatistics":
                     action = new GetStatisticsAction();
                     serialisation = new GetStatisticsSerialisation();
+                    break;
                 case "inscription":
                     action = new InscrireClientAction();
                     serialisation = new InscrireClientSerialisation();
@@ -88,6 +91,11 @@ public class ActionServlet extends HttpServlet {
                 case "historiqueConsultationClient":
                     action = new ConsultationsClientAction();
                     serialisation = new ConsultationsClientSerialisation();
+                    break;
+                case "prendreRDV":
+                    action = new PrendreRendezVousAction();
+                    serialisation = new PrendreRendezVousSerialisation();
+                    break;
                 case "...":
                     break;
             }
