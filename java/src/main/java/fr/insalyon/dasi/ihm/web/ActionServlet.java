@@ -4,6 +4,7 @@ import fr.insalyon.dasi.dao.JpaUtil;
 import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierEmployeAction;
+import fr.insalyon.dasi.ihm.web.action.ConsultationsClientAction;
 import fr.insalyon.dasi.ihm.web.action.GetConsultationEnAttenteAction;
 import fr.insalyon.dasi.ihm.web.action.GetStatisticsAction;
 import fr.insalyon.dasi.ihm.web.serialisation.GetStatisticsSerialisation;
@@ -11,6 +12,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.InfosConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.action.GetProfilClientAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
+import fr.insalyon.dasi.ihm.web.serialisation.ConsultationsClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GetProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListerMediumsSerialisation;
@@ -83,6 +85,9 @@ public class ActionServlet extends HttpServlet {
                     action = new GetProfilClientAction();
                     serialisation = new GetProfilClientSerialisation();
                     break;
+                case "historiqueConsultationClient":
+                    action = new ConsultationsClientAction();
+                    serialisation = new ConsultationsClientSerialisation();
                 case "...":
                     break;
             }
