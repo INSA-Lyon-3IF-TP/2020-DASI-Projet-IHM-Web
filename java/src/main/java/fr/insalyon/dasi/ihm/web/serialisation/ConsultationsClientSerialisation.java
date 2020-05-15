@@ -40,9 +40,24 @@ public class ConsultationsClientSerialisation extends Serialisation {
             
             for (Consultation consultation : consultations) {
                 JsonObject jsonConsultation = new JsonObject();
-                jsonConsultation.addProperty("heureDemande", consultation.getHeureDemande().toString());
-                jsonConsultation.addProperty("heureDebut", consultation.getHeureDebut().toString());
-                jsonConsultation.addProperty("heureFin", consultation.getHeureFin().toString());
+                if(consultation.getHeureDemande() != null)
+                {
+                    jsonConsultation.addProperty("heureDemande", consultation.getHeureDemande().toString());
+                } else {
+                    jsonConsultation.addProperty("heureDemande", "---");
+                }
+                if(consultation.getHeureDebut() != null)
+                {
+                    jsonConsultation.addProperty("heureDebut", consultation.getHeureDebut().toString());
+                } else {
+                    jsonConsultation.addProperty("heureDebut", "---");
+                }
+                if(consultation.getHeureFin() != null)
+                {
+                    jsonConsultation.addProperty("heureFin", consultation.getHeureFin().toString());
+                } else {
+                    jsonConsultation.addProperty("heureFin", "---");
+                }
                 jsonConsultation.addProperty("mediumDenomination", consultation.getMedium().getDenomination());
                 if(consultation.getMedium() instanceof Astrologue){
                     jsonConsultation.addProperty("mediumType", "Astrologue");
