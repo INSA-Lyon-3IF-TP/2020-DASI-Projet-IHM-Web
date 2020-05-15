@@ -32,6 +32,13 @@ public class ListerMediumsSerialisation extends Serialisation{
         
         JsonObject container = new JsonObject();
 
+        if((Boolean) request.getAttribute("connected")){
+            container.addProperty("connected", Boolean.TRUE);
+        }
+        else{
+            container.addProperty("connected", Boolean.FALSE);
+        }
+        
         if (!mediums.isEmpty()) {
             JsonArray astrologues = new JsonArray();
             JsonArray cartomanciens = new JsonArray();
@@ -39,6 +46,7 @@ public class ListerMediumsSerialisation extends Serialisation{
             
             for(Medium medium : mediums){
                 JsonObject mediumJSON = new JsonObject();
+                mediumJSON.addProperty("id",medium.getId());
                 mediumJSON.addProperty("denomination",medium.getDenomination());
                 String genre = (medium.getGenre().equals(Genre.Masculin) ? "M" : "F");
                 mediumJSON.addProperty("genre", genre);

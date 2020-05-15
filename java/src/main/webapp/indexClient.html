@@ -32,15 +32,36 @@
     </body>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
+        function prendreRDV(idMedium) {
+            try {
+                $.ajax({
+                    url: 'ActionServlet',
+                    method: 'post',
+                    data: {'todo': 'prendreRDV', 'idMedium': idMedium}
+                }).done(function (response) {
+                    if (response.ok) {
+                        alert("La demande de rendez-vous a bien été prise en compte");
+                        //TODO éventuellement rediriger
+                    } else {
+                        alert("Malheureusement, ce médium n'est pas disponible. Veuillez réessayer plus tard");
+                    }
+                }).fail(function(){
+                    console.log('Erreur critique');
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        
         $(document).ready(function () {
             $.ajax({
                 url: 'ActionServlet',
                 method: 'get',
                 dataType: 'json',
                 data: {'todo': 'listerMediums'}
-            }).done(function (mediums) {
+            }).done(function (response) {
                 $('#main').empty();
-                console.log(mediums);
+                console.log(response);
                 $('#nav-astro').append(
                     $('<table />')
                     .attr('id', 'astrologuesTable')
@@ -129,13 +150,20 @@
                     )
                 );
                    
-                mediums.astrologues.forEach(function (astrologue) {
+                response.astrologues.forEach(function (astrologue) {
                     let astrologueDenomination = $('<td />').html(astrologue.denomination);
                     let astrologueGenre = $('<td />').html(astrologue.genre);
                     let astrologuePresentation = $('<td />').html(astrologue.presentation);
                     let astrologueFormation = $('<td />').html(astrologue.formation);
                     let astrologuePromo = $('<td />').html(astrologue.promo);
-                    let astrologueBouton = $('<td />').append($('<button />').html('RDV'));
+                    let astrologueBouton;
+                    if(response.connected){
+                        astrologueBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + astrologue.id + ')}'));                        
+                    }
+                    else{
+                        astrologueBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').attr('disabled', '').html('RDV').attr('onclick', 'alert("lol")'));
+                    }
+
                     $('#astrologuesTable')
                             .append(
                                     $('<tr>')
@@ -149,11 +177,17 @@
                                             )
                                     );
                 });
-                mediums.cartomanciens.forEach(function (cartomancien) {
+                response.cartomanciens.forEach(function (cartomancien) {
                     let cartomancienDenomination = $('<td />').html(cartomancien.denomination);
                     let cartomancienGenre = $('<td />').html(cartomancien.genre);
                     let cartomancienPresentation = $('<td />').html(cartomancien.presentation);
-                    let cartomancienBouton = $('<td />').append($('<button />').html('RDV'));
+                    let cartomancienBouton;
+                    if(response.connected){
+                        cartomancienBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + cartomancien.id + ')}'));                        
+                    }
+                    else{
+                        cartomancienBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').attr('disabled', '').html('RDV').attr('onclick', 'alert("lol")'));
+                    }
                     $('#cartomanciensTable')
                             .append(
                                     $('<tr>')
@@ -165,12 +199,18 @@
                                             )
                                     );
                 });
-                mediums.spirites.forEach(function (spirite) {
+                response.spirites.forEach(function (spirite) {
                     let spiriteDenomination = $('<td />').html(spirite.denomination);
                     let spiriteGenre = $('<td />').html(spirite.genre);
                     let spiritePresentation = $('<td />').html(spirite.presentation);
                     let spiriteSupport = $('<td />').html(spirite.support);
-                    let spiriteBouton = $('<td />').append($('<button />').html('RDV'));
+                    let spiriteBouton;
+                    if(response.connected){
+                        spiriteBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + spirite.id + ')}'));                        
+                    }
+                    else{
+                        spiriteBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').attr('disabled', '').html('RDV').attr('onclick', 'alert("lol")'));
+                    }
                     $('#spiritesTable')
                             .append(
                                     $('<tr>')
