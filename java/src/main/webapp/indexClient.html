@@ -39,7 +39,7 @@
                     method: 'post',
                     data: {'todo': 'prendreRDV', 'idMedium': idMedium}
                 }).done(function (response) {
-                    if (response.ok) {
+                    if (response.success) {
                         alert("La demande de rendez-vous a bien été prise en compte");
                         //TODO éventuellement rediriger
                     } else {
