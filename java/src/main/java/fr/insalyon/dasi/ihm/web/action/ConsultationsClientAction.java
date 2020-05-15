@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author fabien
  */
-public class GetProfilClientAction extends Action{
+public class ConsultationsClientAction extends Action {
 
     @Override
     public void executer(HttpServletRequest request) {

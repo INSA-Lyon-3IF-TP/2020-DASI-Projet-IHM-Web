@@ -20,8 +20,10 @@ and open the template in the editor.
         <p>Animal : <span id="animal"></span></p>
         <br/>
         <p><a href="indexClient.html">Mediums</a></p>
-        <p><a href="indexClient.html">Afficher l'historique de mes consultations</a></p>
-        
+        <button id="historique">Afficher l'historique de mes consultations</button>
+        <i id="consultations">
+            
+        </i>
         <script>
             $(document).ready( function () {
                 
@@ -55,6 +57,79 @@ and open the template in the editor.
 
                 });
             });
+            
+            
+            
+            
+            $("#historique").on("click", function() {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {'todo': 'historiqueConsultationClient'}
+                }).done(function (container) {
+                    $('#consultations').empty();
+                    console.log(container);
+                    $('#consultations').append(
+                            $('<div />')
+                            .attr('id', 'historique')
+                            .attr('style', 'width: 90%')
+                            .append(
+                                    $('<table />')
+                                    .attr('id', 'consultationsTable')
+                                    .addClass('table')
+                                    .append(
+                                            $('<thead />')
+                                            .append(
+                                                    $('<tr />')
+                                                    .attr('id', 'table_head')
+                                                    .append(
+                                                            $('<th />')
+                                                            .attr('scope', 'col')
+                                                            .html('Medium'),
+                                                            $('<th />')
+                                                            .attr('scope', 'col')
+                                                            .html('Type'),
+                                                            $('<th />')
+                                                            .attr('scope', 'col')
+                                                            .html('Heure de demande'),
+                                                            $('<th />')
+                                                            .attr('scope', 'col')
+                                                            .html('Heure de début'),
+                                                            $('<th />')
+                                                            .attr('scope', 'col')
+                                                            .html('Heure de fin'),
+                                                            )
+                                                    )
+                                            )
+                                    )
+                            );
+                    if(typeof container.consultations === 'undefined' || container.consultations.length < 1)
+                    {
+                        return;
+                    } else {
+                        container.consultations.forEach(function (consultation) {
+                        let medium = $('<td />').html(consultation.mediumDenomination);
+                        let type = $('<td />').html(consultation.mediumType);
+                        let heureDemande = $('<td />').html(consultation.heureDemande);
+                        let heureDebut = $('<td />').html(consultation.heuredebut);
+                        let heureFin = $('<td />').html(consultation.heureFin);
+                        $('#consultationsTable')
+                                .append(
+                                        $('<tr>')
+                                        .append(
+                                                medium,
+                                                type,
+                                                heureDemande,
+                                                heureDebut,
+                                                heureFin
+                                                )
+                                        );
+                    }); 
+                    }
+                }); 
+                });
+
         </script>
     </body>
 </html>
