@@ -1,176 +1,37 @@
-<!DOCTYPE html>
 <html>
     <head>
+        <title>Choix du site</title>
         <meta charset="UTF-8">
-        <title>TD DASI - Initiation Web</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <style>
+            .container {
+              height: 100%;
+              position: relative;
+              /*border: 3px solid green;*/
+            }
+
+            .center {
+              margin: 0;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+            }
+        </style>
     </head>
     <body>
-        <h1>TD DASI - Initiation Web</h1>
-        <p>Ce TD vous intie aux technologies Web. Êtes-vous prêts ?</p>
-        <p><a href="./login.html">Aller à la page de Connexion</a></p>
-        <p><a href="./inscriptionClient.html">Aller à la page d'inscription</a></p>
-        <div id="main">
-
+        <div class="container">
+            <div class="center">
+                <a class="btn btn-info" href="indexEmploye.html">Espace Employé</a>
+                <a class="btn btn-info" href="indexClient.html">Espace Client</a>
+            </div>
         </div>
-
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     </body>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: 'ActionServlet',
-                method: 'get',
-                dataType: 'json',
-                data: {'todo': 'listerMediums'}
-            }).done(function (mediums) {
-                $('#main').empty();
-                console.log(mediums);
-                $('#main').append(
-                        $('<div />')
-                        .attr('id', 'mediums')
-                        .attr('style', 'width: 90%')
-                        .append(
-                                $('<table />')
-                                .attr('id', 'astrologuesTable')
-                                .addClass('table')
-                                .append(
-                                        $('<thead />')
-                                        .append(
-                                                $('<tr />')
-                                                .attr('id', 'table_head')
-                                                .append(
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Dénomination'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Genre'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Présentation'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Formation'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Promo'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Prendre rendez-vous')
-                                                        )
-                                                )
-                                        ),
-                                $('<table />')
-                                .attr('id', 'cartomanciensTable')
-                                .addClass('table')
-                                .append(
-                                        $('<thead />')
-                                        .append(
-                                                $('<tr />')
-                                                .attr('id', 'table_head')
-                                                .append(
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Dénomination'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Genre'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Présentation'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Prendre rendez-vous')
-                                                        )
-                                                )
-                                        ),
-                                $('<table />')
-                                .attr('id', 'spiritesTable')
-                                .addClass('table')
-                                .append(
-                                        $('<thead />')
-                                        .append(
-                                                $('<tr />')
-                                                .attr('id', 'table_head')
-                                                .append(
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Dénomination'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Genre'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Présentation'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Support'),
-                                                        $('<th />')
-                                                        .attr('scope', 'col')
-                                                        .html('Prendre rendez-vous')
-                                                        )
-                                                )
-                                        )
-                                )
-                        );
-                mediums.astrologues.forEach(function (astrologue) {
-                    let astrologueDenomination = $('<td />').html(astrologue.denomination);
-                    let astrologueGenre = $('<td />').html(astrologue.genre);
-                    let astrologuePresentation = $('<td />').html(astrologue.presentation);
-                    let astrologueFormation = $('<td />').html(astrologue.formation);
-                    let astrologuePromo = $('<td />').html(astrologue.promo);
-                    let astrologueBouton = $('<td />').append($('<button />').html('RDV'));
-                    $('#astrologuesTable')
-                            .append(
-                                    $('<tr>')
-                                    .append(
-                                            astrologueDenomination,
-                                            astrologueGenre,
-                                            astrologuePresentation,
-                                            astrologueFormation,
-                                            astrologuePromo,
-                                            astrologueBouton
-                                            )
-                                    );
-                });
-                mediums.cartomanciens.forEach(function (cartomancien) {
-                    let cartomancienDenomination = $('<td />').html(cartomancien.denomination);
-                    let cartomancienGenre = $('<td />').html(cartomancien.genre);
-                    let cartomancienPresentation = $('<td />').html(cartomancien.presentation);
-                    let cartomancienBouton = $('<td />').append($('<button />').html('RDV'));
-                    $('#cartomanciensTable')
-                            .append(
-                                    $('<tr>')
-                                    .append(
-                                            cartomancienDenomination,
-                                            cartomancienGenre,
-                                            cartomancienPresentation,
-                                            cartomancienBouton
-                                            )
-                                    );
-                });
-                mediums.spirites.forEach(function (spirite) {
-                    let spiriteDenomination = $('<td />').html(spirite.denomination);
-                    let spiriteGenre = $('<td />').html(spirite.genre);
-                    let spiritePresentation = $('<td />').html(spirite.presentation);
-                    let spiriteSupport = $('<td />').html(spirite.support);
-                    let spiriteBouton = $('<td />').append($('<button />').html('RDV'));
-                    $('#spiritesTable')
-                            .append(
-                                    $('<tr>')
-                                    .append(
-                                            spiriteDenomination,
-                                            spiriteGenre,
-                                            spiritePresentation,
-                                            spiriteSupport,
-                                            spiriteBouton
-                                            )
-                                    );
-                });
-            });
-        });
-        $('#main').append(
-                $('<h1 />').html("Test jquery")
-                );
-    </script>
 </html>
