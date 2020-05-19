@@ -13,7 +13,7 @@
                 <a class="navbar-brand" href="#">Predict'IF</a>
                 <ul class="nav navbar-nav navbar-right">
                   <li class="nav-item ">
-                    <a class="nav-link" href="consultationEnCours.html">Démarrer la consultation</a>
+                    <button id="demarrerConsultation" class="btn btn-secondary">Démarrer la consultation</button>
                   </li>
                 </ul>
             </div>
@@ -63,6 +63,28 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
         <script>
+            function demarrerConsultation(){
+                let confirmation = confirm("Êtes-vous sûr(e) de vouloir démarrer la consultation ?");
+                if (confirmation !== true) {
+                  return;
+                }
+                
+                $.ajax({
+                    url: 'ActionServlet',
+                    method: 'get',
+                    dataType: 'json',
+                    data: {'todo': 'demarrerConsultation'}
+                }).done(function (response) {
+                    if(response.success){
+                        window.location = "consultationEnCours.html";
+                    }
+                    else{
+                        alert("Une erreur s'est produite. Veuillez réessayer.");
+                    }
+                });
+                
+            }
+            
             $(document).ready(function () {
                 $.ajax({
                     url: 'ActionServlet',
@@ -149,6 +171,8 @@
                         });
                     }
                 });
+                
+                $('#demarrerConsultation').click(demarrerConsultation);
             });
         </script>
     </body>
