@@ -10,11 +10,13 @@ import fr.insalyon.dasi.ihm.web.action.GetStatisticsAction;
 import fr.insalyon.dasi.ihm.web.serialisation.GetStatisticsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InfosConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.action.GetProfilClientAction;
+import fr.insalyon.dasi.ihm.web.action.GetProfilEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.PrendreRendezVousAction;
 import fr.insalyon.dasi.ihm.web.serialisation.ConsultationsClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GetProfilClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.GetProfilEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ListerMediumsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.PrendreRendezVousSerialisation;
@@ -96,6 +98,10 @@ public class ActionServlet extends HttpServlet {
                 case "prendreRDV":
                     action = new PrendreRendezVousAction();
                     serialisation = new PrendreRendezVousSerialisation();
+                    break;
+                case "profilEmploye":
+                    action = new GetProfilEmployeAction();
+                    serialisation = new GetProfilEmployeSerialisation();
                     break;
                 case "...":
                     break;

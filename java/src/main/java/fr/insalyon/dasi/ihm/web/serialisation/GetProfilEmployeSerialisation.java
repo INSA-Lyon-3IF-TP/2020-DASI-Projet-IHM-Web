@@ -11,6 +11,7 @@ import fr.insalyon.dasi.metier.modele.Astrologue;
 import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.Client;
 import fr.insalyon.dasi.metier.modele.Consultation;
+import fr.insalyon.dasi.metier.modele.Employe;
 import fr.insalyon.dasi.metier.modele.Spirite;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -23,32 +24,38 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabien
  */
-public class ConsultationsClientSerialisation extends Serialisation {
+public class GetProfilEmployeSerialisation extends Serialisation {
 
     @Override
-    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {        
+    public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Employe employe = (Employe)request.getAttribute("employe");
         
-        Client client = (Client)request.getAttribute("client");
         JsonObject container = new JsonObject();
-        
-        Boolean connexion = (client != null); //Si jamais on a un probleme avec la connexion du client on garde l'attribut
+
+        Boolean connexion = (employe != null); //Si jamais on a un probleme avec la connexion du client on garde l'attribut
         container.addProperty("connexion", connexion);
 
-        if (client != null) {
+        if (employe != null) {
+            JsonObject jsonEmploye = new JsonObject();
+            jsonEmploye.addProperty("id", employe.getId());
+            jsonEmploye.addProperty("nom", employe.getNom());
+            jsonEmploye.addProperty("prenom", employe.getPrenom());
+            jsonEmploye.addProperty("tel", employe.getTelephone());
+            jsonEmploye.addProperty("adresse", employe.getAdresse());
+            jsonEmploye.addProperty("mail", employe.getMail());
+
+
+            container.add("employe", jsonEmploye);
+            
+            
+            
             JsonArray jsonConsultations = new JsonArray();
-            List<Consultation> consultations = client.getConsultations();
+            List<Consultation> consultations = employe.getConsultations();
             
             for (Consultation consultation : consultations) {
                 JsonObject jsonConsultation = new JsonObject();
                 DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy"); 
                 String strDate;
-                if(consultation.getHeureDemande() != null)
-                {
-                    strDate = dateFormat.format(consultation.getHeureDemande()); 
-                    jsonConsultation.addProperty("heureDemande", strDate);
-                } else {
-                    jsonConsultation.addProperty("heureDemande", "---");
-                }
                 if(consultation.getHeureDebut() != null)
                 {
                     strDate = dateFormat.format(consultation.getHeureDebut());
@@ -73,6 +80,8 @@ public class ConsultationsClientSerialisation extends Serialisation {
                 else if(consultation.getMedium() instanceof Spirite){
                     jsonConsultation.addProperty("mediumType", "Spirite");
                 }
+                jsonConsultation.addProperty("commentaire", consultation.getCommentaire());
+                jsonConsultation.addProperty("client", consultation.getClient().getNom() + " " + consultation.getClient().getPrenom());
                 jsonConsultations.add(jsonConsultation);
             }
             

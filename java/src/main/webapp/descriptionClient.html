@@ -8,6 +8,37 @@
     </head>
     <body>
 
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Predict'IF</a>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="nav-item ">
+                    <a class="nav-link" href="consultationEnCours.html">Démarrer la consultation</a>
+                  </li>
+                </ul>
+            </div>
+        </nav>
+        <br/>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'ActionServlet',
+                method: 'get',
+                dataType: 'json',
+                data: {'todo': 'getConsultationEnAttente'}
+            }).done(function (response) {
+                if(!response.connexion){
+                    window.location = "loginEmploye.html";
+                }
+                else if(!response.consultation){ //Si aucune consultation en cours pour l'employe courant
+                    window.location = "dashboard.html";
+                }
+                else{
+                    $('#profilClient').html("Consultation avec le client n° " + response.consultation.idClient);
+                }
+            });
+        });
+
         <section style="width:95%; border: 3px solid green; margin: auto; display:flex">
             <div style="width:33%; border: 3px solid red; text-align: center">
                 Profil Client
