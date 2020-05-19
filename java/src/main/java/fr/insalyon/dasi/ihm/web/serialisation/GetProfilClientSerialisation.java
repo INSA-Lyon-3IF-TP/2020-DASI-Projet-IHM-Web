@@ -8,6 +8,8 @@ package fr.insalyon.dasi.ihm.web.serialisation;
 import com.google.gson.JsonObject;
 import fr.insalyon.dasi.metier.modele.Client;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,7 +35,9 @@ public class GetProfilClientSerialisation extends Serialisation{
             jsonClient.addProperty("nom", client.getNom());
             jsonClient.addProperty("prenom", client.getPrenom());
             jsonClient.addProperty("civilite", client.getCivilite());
-            jsonClient.addProperty("dateDeNaissance", client.getDateDeNaissance().toString());
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+            String strDate = dateFormat.format(client.getDateDeNaissance()); 
+            jsonClient.addProperty("dateDeNaissance", strDate);
             jsonClient.addProperty("mail", client.getMail());
             jsonClient.addProperty("telephone", client.getTelephone());
             jsonClient.addProperty("adresse", client.getAdresse());

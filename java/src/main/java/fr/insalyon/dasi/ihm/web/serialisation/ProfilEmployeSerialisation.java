@@ -25,15 +25,18 @@ public class ProfilEmployeSerialisation extends Serialisation {
         Boolean connexion = (employe != null);
         container.addProperty("connexion", connexion);
 
-//        if (employe != null) {
-//            JsonObject jsonClient = new JsonObject();
-//            jsonClient.addProperty("id", employe.getId());
-//            jsonClient.addProperty("nom", employe.getNom());
-//            jsonClient.addProperty("prenom", employe.getPrenom());
-//            jsonClient.addProperty("mail", employe.getMail());
-//
-//            container.add("employe", jsonClient);
-//        }
+        if (employe != null) {
+            JsonObject jsonEmploye = new JsonObject();
+            jsonEmploye.addProperty("id", employe.getId());
+            jsonEmploye.addProperty("nom", employe.getNom());
+            jsonEmploye.addProperty("prenom", employe.getPrenom());
+            jsonEmploye.addProperty("tel", employe.getTelephone());
+            jsonEmploye.addProperty("adresse", employe.getAdresse());
+            jsonEmploye.addProperty("mail", employe.getMail());
+            jsonEmploye.addProperty("estOccupe", employe.getEstOccupe());
+
+            container.add("employe", jsonEmploye);
+        }
 
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
