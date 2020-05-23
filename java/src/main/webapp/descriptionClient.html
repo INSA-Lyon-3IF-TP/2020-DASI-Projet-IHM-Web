@@ -13,7 +13,7 @@
                 <a class="navbar-brand" href="#">Predict'IF</a>
                 <ul class="nav navbar-nav navbar-right">
                   <li class="nav-item ">
-                    <a class="nav-link" href="consultationEnCours.html">Démarrer la consultation</a>
+                    <button id="demarrerConsultation" class="btn btn-secondary">Démarrer la consultation</button>
                   </li>
                 </ul>
             </div>
@@ -25,96 +25,35 @@
                 Profil Client
                 <div style="border: 3px dotted pink">
                     <label>Civilité : </label>
-                    <input type="text" disabled id="civilite" value="M."/> <br />
+                    <input type="text" disabled id="civilite"/> <br />
                     <label>Nom : </label>
-                    <input type="text" disabled id="nom" value="Woagner"/> <br />
+                    <input type="text" disabled id="nom"/> <br />
                     <label>Prénom : </label>
-                    <input type="text" disabled id="prenom" value="Moez"/> <br />
+                    <input type="text" disabled id="prenom"/> <br />
                     <label>Date de Naissance : </label>
-                    <input type="text" disabled id="dateDeNaissance" value="24 février 1985"/> <br />
+                    <input type="text" disabled id="dateDeNaissance"/> <br />
                     <label>Téléphone : </label>
-                    <input type="text" disabled id="telephone" value="0606060606"/> <br />
+                    <input type="text" disabled id="telephone"/> <br />
                     <label>Mail : </label>
-                    <input type="text" disabled id="mail" value="moez.woagner@laposte.net"/> <br />
+                    <input type="text" disabled id="mail"/> <br />
                 </div>
                 Profil Astral
                 <div style="border: 3px dotted yellow">
                     <label>Signe Astrologique : </label>
-                    <input type="text" disabled id="signeAstro" value="Sagittaire"/> <br />
+                    <input type="text" disabled id="signeZodiaque"/> <br />
                     <label>Signe Chinois : </label>
-                    <input type="text" disabled id="signeChninois" value="Dragon"/> <br />
+                    <input type="text" disabled id="signeChinois"/> <br />
                     <label>Couleur : </label>
-                    <input type="text" disabled id="couleur" value="Pourpre"/> <br />
+                    <input type="text" disabled id="couleur"/> <br />
                     <label>Animal : </label>
-                    <input type="text" disabled id="animal" value="Loutre"/> <br />
+                    <input type="text" disabled id="animal"/> <br />
                 </div>
             </div>
             <div style="width:66%; border: 3px solid blue">
                 <p style="text-align: center">
                     Historique des consultations
                 </p>
-                <div id="historique" style="width: 90%">
-                    <table id="consultationsTable" class="table">
-                        <thead>
-                            <tr id="table_head">
-                                <th scope="col">Medium</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Heure de demande</th>
-                                <th scope="col">Heure de début</th>
-                                <th scope="col">Heure de fin</th>
-                                <th scope="col">Commentaire</th>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td>Marie Cumin</td>
-                            <td>Astrologue</td>
-                            <td>Thu May 07 15:58:01 CEST 2020</td>
-                            <td></td>
-                            <td>---</td>
-                            <td>Vient de perdre son mari</td>
-                        </tr>
-                        <tr>
-                            <td>Mr M</td>
-                            <td>Astrologue</td>
-                            <td>Fri May 15 16:49:04 CEST 2020</td>
-                            <td></td>
-                            <td>---</td>
-                            <td>R.A.S</td>
-                        </tr>
-                        <tr>
-                            <td>Mr M</td>
-                            <td>Astrologue</td>
-                            <td>Fri May 15 16:49:14 CEST 2020</td>
-                            <td></td>
-                            <td>---</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Mr M</td>
-                            <td>Astrologue</td>
-                            <td>Fri May 15 16:51:23 CEST 2020</td>
-                            <td></td>
-                            <td>---</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Marie Cumin</td>
-                            <td>Astrologue</td>
-                            <td>Fri May 15 16:53:24 CEST 2020</td>
-                            <td></td>
-                            <td>---</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Nolwann Leruy</td>
-                            <td>Astrologue</td>
-                            <td>Fri May 15 16:53:44 CEST 2020</td>
-                            <td></td>
-                            <td>---</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
+                <div id="historique" style="width: 90%" />
 
             </div>
         </section>
@@ -124,6 +63,28 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
         <script>
+            function demarrerConsultation(){
+                let confirmation = confirm("Êtes-vous sûr(e) de vouloir démarrer la consultation ?");
+                if (confirmation !== true) {
+                  return;
+                }
+                
+                $.ajax({
+                    url: 'ActionServlet',
+                    method: 'get',
+                    dataType: 'json',
+                    data: {'todo': 'demarrerConsultation'}
+                }).done(function (response) {
+                    if(response.success){
+                        window.location = "consultationEnCours.html";
+                    }
+                    else{
+                        alert("Une erreur s'est produite. Veuillez réessayer.");
+                    }
+                });
+                
+            }
+            
             $(document).ready(function () {
                 $.ajax({
                     url: 'ActionServlet',
@@ -133,13 +94,85 @@
                 }).done(function (response) {
                     if (!response.connexion) {
                         window.location = "loginEmploye.html";
-                    } else if (!response.consultation) { //Si aucune consultation en cours pour l'employe courant
+                    } else if (!response.client) { //Si aucune consultation en cours pour l'employe courant
                         //window.location = "dashboard.html";
                         //uncomment this
                     } else {
-                        $('#profilClient').html("Consultation avec le client n° " + response.consultation.idClient);
+                        
+                        $('#civilite').attr('value', response.client.civilite);
+                        $('#nom').attr('value', response.client.nom);
+                        $('#prenom').attr('value', response.client.prenom);
+                        $('#dateDeNaissance').attr('value', response.client.dateDeNaissance);
+                        $('#telephone').attr('value', response.client.telephone);
+                        $('#mail').attr('value', response.client.mail);
+                        $('#signeZodiaque').attr('value', response.profilAstral.signeZodiaque);
+                        $('#signeChinois').attr('value', response.profilAstral.signeChinois);
+                        $('#animal').attr('value', response.profilAstral.animal);
+                        $('#couleur').attr('value', response.profilAstral.couleur);
+                        
+                        
+                        $('#historique')
+                        .append(
+                            $('<table />')
+                            .attr('id', 'consultationsTable')
+                            .attr('class', 'table')
+                            .append(
+                                $('<thead />')
+                            )
+                            .append(
+                                $('<tr />')
+                                .append(
+                                    $('<th />')
+                                    .attr('scope', 'col')
+                                    .text('Employe'),
+                                    $('<th />')
+                                    .attr('scope', 'col')
+                                    .text('Medium'),
+                                    $('<th />')
+                                    .attr('scope', 'col')
+                                    .text('Type'),
+                                    $('<th />')
+                                    .attr('scope', 'col')
+                                    .text('Heure de demande'),
+                                    $('<th />')
+                                    .attr('scope', 'col')
+                                    .text('Heure de début'),
+                                    $('<th />')
+                                    .attr('scope', 'col')
+                                    .text('Heure de fin'),
+                                    $('<th />')
+                                    .attr('scope', 'col')
+                                    .text('Commentaire')
+                                )
+                            )   
+                         );
+                        response.historiqueClient.forEach(function(consultation){
+                            let employe = $('<td />').html(consultation.employe);
+                            let medium = $('<td />').html(consultation.mediumDenomination);
+                            let type = $('<td />').html(consultation.mediumType);
+                            let heureDemande = $('<td />').html(consultation.heureDemande);
+                            let heureDebut = $('<td />').html(consultation.heureDebut);
+                            let heureFin = $('<td />').html(consultation.heureFin);
+                            let commentaire = $('<td />').html(consultation.commentaire);
+                            
+                            $('#consultationsTable')
+                                .append(
+                                    $('<tr />')
+                                    .append(
+                                        employe,
+                                        medium,
+                                        type,
+                                        heureDemande,
+                                        heureDebut,
+                                        heureFin,
+                                        commentaire
+                                    )
+                                );
+                        });
                     }
                 });
+                
+                $('#demarrerConsultation').click(demarrerConsultation);
             });
         </script>
     </body>
