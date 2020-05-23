@@ -10,12 +10,12 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Predict'IF</a>
                 <ul class="nav navbar-nav navbar-right">
-                  <li class="nav-item ">
-                    <a class="nav-link" href="./login.html">Connexion</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="./inscriptionClient.html">Inscription</a>
-                  </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="./login.html">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./inscriptionClient.html">Inscription</a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -54,14 +54,28 @@
                     } else {
                         alert("Malheureusement, ce médium n'est pas disponible. Veuillez réessayer plus tard");
                     }
-                }).fail(function(){
+                }).fail(function () {
                     console.log('Erreur critique');
                 });
             } catch (e) {
                 console.log(e);
             }
         }
-        
+
+        function disconnect() {
+            $.ajax({
+                url: 'ActionServlet',
+                method: 'get',
+                dataType: 'json',
+                data: {'todo': 'logout'}
+            }).done(function (response) {
+                if (!response.success) {
+                    alert('Erreur de déconnexion');
+                }
+                window.location = "indexClient.html";
+            });
+        }
+
         $(document).ready(function () {
             $.ajax({
                 url: 'ActionServlet',
@@ -69,111 +83,119 @@
                 dataType: 'json',
                 data: {'todo': 'listerMediums'}
             }).done(function (response) {
-                
-                if(response.connected){
+
+                if (response.connected) {
                     $('.navbar-right').empty();
                     $('.navbar-right')
-                    .append(
-                        $('<li />')
-                        .attr('class', 'nav-item')
-                        .append(
-                            $('<a />')
-                            .attr('class', 'nav-link')
-                            .attr('href', "profilClient.html")
-                            .text("Profil Astral")
-                        )
-                    );
+                            .append(
+                                    $('<li />')
+                                    .attr('class', 'nav-item')
+                                    .append(
+                                            $('<a />')
+                                            .attr('class', 'nav-link btn')
+                                            .attr('href', "profilClient.html")
+                                            .text("Profil Astral")
+                                            ),
+                                    $('<li />')
+                                    .attr('class', 'nav-item')
+                                    .append(
+                                            $('<button />')
+                                            .attr('class', 'nav-link btn')
+                                            .text("Déconnexion")
+                                            .click(disconnect)
+                                            )
+                                    );
                 }
-                
-                
+
+
                 $('#nav-astro').append(
-                    $('<table />')
-                    .attr('id', 'astrologuesTable')
-                    .addClass('table')
-                    .append(
-                        $('<thead />')
+                        $('<table />')
+                        .attr('id', 'astrologuesTable')
+                        .addClass('table')
                         .append(
-                            $('<tr />')
-                            .attr('id', 'table_head')
-                            .append(
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Dénomination'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Genre'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Présentation'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Formation'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Promo'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Prendre rendez-vous')
-                            )
-                        )
-                    )
-                );
+                                $('<thead />')
+                                .append(
+                                        $('<tr />')
+                                        .attr('id', 'table_head')
+                                        .append(
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Dénomination'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Genre'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Présentation'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Formation'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Promo'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Prendre rendez-vous')
+                                                )
+                                        )
+                                )
+                        );
                 $('#nav-carto').append(
-                    $('<table />')
-                    .attr('id', 'cartomanciensTable')
-                    .addClass('table')
-                    .append(
-                        $('<thead />')
+                        $('<table />')
+                        .attr('id', 'cartomanciensTable')
+                        .addClass('table')
                         .append(
-                            $('<tr />')
-                            .attr('id', 'table_head')
-                            .append(
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Dénomination'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Genre'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Présentation'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Prendre rendez-vous')
-                            )
-                        )
-                    )
-                );
+                                $('<thead />')
+                                .append(
+                                        $('<tr />')
+                                        .attr('id', 'table_head')
+                                        .append(
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Dénomination'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Genre'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Présentation'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Prendre rendez-vous')
+                                                )
+                                        )
+                                )
+                        );
                 $('#nav-spiri').append(
-                    $('<table />')
-                    .attr('id', 'spiritesTable')
-                    .addClass('table')
-                    .append(
-                        $('<thead />')
+                        $('<table />')
+                        .attr('id', 'spiritesTable')
+                        .addClass('table')
                         .append(
-                            $('<tr />')
-                            .attr('id', 'table_head')
-                            .append(
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Dénomination'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Genre'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Présentation'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Support'),
-                                $('<th />')
-                                .attr('scope', 'col')
-                                .html('Prendre rendez-vous')
-                            )
-                        )
-                    )
-                );
-                   
+                                $('<thead />')
+                                .append(
+                                        $('<tr />')
+                                        .attr('id', 'table_head')
+                                        .append(
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Dénomination'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Genre'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Présentation'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Support'),
+                                                $('<th />')
+                                                .attr('scope', 'col')
+                                                .html('Prendre rendez-vous')
+                                                )
+                                        )
+                                )
+                        );
+
                 response.astrologues.forEach(function (astrologue) {
                     let astrologueDenomination = $('<td />').html(astrologue.denomination);
                     let astrologueGenre = $('<td />').html(astrologue.genre);
@@ -181,10 +203,9 @@
                     let astrologueFormation = $('<td />').html(astrologue.formation);
                     let astrologuePromo = $('<td />').html(astrologue.promo);
                     let astrologueBouton;
-                    if(response.connected){
-                        astrologueBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + astrologue.id + ')}'));                        
-                    }
-                    else{
+                    if (response.connected) {
+                        astrologueBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + astrologue.id + ')}'));
+                    } else {
                         astrologueBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').attr('disabled', '').html('RDV').attr('onclick', 'alert("lol")'));
                     }
 
@@ -206,10 +227,9 @@
                     let cartomancienGenre = $('<td />').html(cartomancien.genre);
                     let cartomancienPresentation = $('<td />').html(cartomancien.presentation);
                     let cartomancienBouton;
-                    if(response.connected){
-                        cartomancienBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + cartomancien.id + ')}'));                        
-                    }
-                    else{
+                    if (response.connected) {
+                        cartomancienBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + cartomancien.id + ')}'));
+                    } else {
                         cartomancienBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').attr('disabled', '').html('RDV').attr('onclick', 'alert("lol")'));
                     }
                     $('#cartomanciensTable')
@@ -229,10 +249,9 @@
                     let spiritePresentation = $('<td />').html(spirite.presentation);
                     let spiriteSupport = $('<td />').html(spirite.support);
                     let spiriteBouton;
-                    if(response.connected){
-                        spiriteBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + spirite.id + ')}'));                        
-                    }
-                    else{
+                    if (response.connected) {
+                        spiriteBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').html('RDV').attr('onclick', 'new function(){prendreRDV(' + spirite.id + ')}'));
+                    } else {
                         spiriteBouton = $('<td />').append($('<button />').attr('class', 'btn btn-warning').attr('disabled', '').html('RDV').attr('onclick', 'alert("lol")'));
                     }
                     $('#spiritesTable')

@@ -17,9 +17,12 @@ and open the template in the editor.
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Predict'IF</a>
                 <ul class="nav navbar-nav navbar-right">
-                  <li class="nav-item ">
-                    <a class="nav-link" href="indexClient.html">Mediums</a>
-                  </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn" href="indexClient.html">Mediums</a>
+                    </li>
+                    <li class="nav-item ">
+                        <button class="nav-link btn" onclick="disconnect()">Déconexxion</button>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -31,11 +34,25 @@ and open the template in the editor.
         <br/>
         <button id="historique">Afficher l'historique de mes consultations</button>
         <i id="consultations">
-            
+
         </i>
         <script>
-            $(document).ready( function () {
-                
+            function disconnect() {
+                $.ajax({
+                    url: 'ActionServlet',
+                    method: 'get',
+                    dataType: 'json',
+                    data: {'todo': 'logout'}
+                }).done(function (response) {
+                    if (!response.success) {
+                        alert('Erreur de déconnexion');
+                    }
+                    window.location = "indexClient.html";
+                });
+            }
+
+            $(document).ready(function () {
+
                 // Appel AJAX
                 $.ajax({
                     url: './ActionServlet',
@@ -45,31 +62,30 @@ and open the template in the editor.
                     },
                     dataType: 'json'
                 })
-                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
-                    console.log('Response',response); // LOG dans Console Javascript
-                    if (response.connexion) {
-                        $("#zodiaque").html(response.profilAstral.signeZodiaque);
-                        $("#chinois").html(response.profilAstral.signeChinois);
-                        $("#couleur").html(response.profilAstral.couleur);
-                        $("#animal").html(response.profilAstral.animal);
-                    }
-                    else {
-                        window.location.href = "login.html"; //Le client n'est pas connecté
-                    }
-                })
-                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
-                    console.log('Error',error); // LOG dans Console Javascript
-                    alert("Erreur lors de l'appel AJAX");
-                })
-                .always( function () { // Fonction toujours appelée
+                        .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                            console.log('Response', response); // LOG dans Console Javascript
+                            if (response.connexion) {
+                                $("#zodiaque").html(response.profilAstral.signeZodiaque);
+                                $("#chinois").html(response.profilAstral.signeChinois);
+                                $("#couleur").html(response.profilAstral.couleur);
+                                $("#animal").html(response.profilAstral.animal);
+                            } else {
+                                window.location.href = "login.html"; //Le client n'est pas connecté
+                            }
+                        })
+                        .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                            console.log('Error', error); // LOG dans Console Javascript
+                            alert("Erreur lors de l'appel AJAX");
+                        })
+                        .always(function () { // Fonction toujours appelée
 
-                });
+                        });
             });
-            
-            
-            
-            
-            $("#historique").on("click", function() {
+
+
+
+
+            $("#historique").on("click", function () {
                 $.ajax({
                     url: './ActionServlet',
                     method: 'GET',
@@ -112,36 +128,36 @@ and open the template in the editor.
                                             )
                                     )
                             );
-                    if(response.connexion){
-                        if(typeof response.consultations === 'undefined' || response.consultations.length < 1)
+                    if (response.connexion) {
+                        if (typeof response.consultations === 'undefined' || response.consultations.length < 1)
                         {
                             return;
                         } else {
                             response.consultations.forEach(function (consultation) {
-                            let medium = $('<td />').html(consultation.mediumDenomination);
-                            let type = $('<td />').html(consultation.mediumType);
-                            let heureDemande = $('<td />').html(consultation.heureDemande);
-                            let heureDebut = $('<td />').html(consultation.heureDebut);
-                            let heureFin = $('<td />').html(consultation.heureFin);
-                            $('#consultationsTable')
-                                    .append(
-                                            $('<tr>')
-                                            .append(
-                                                    medium,
-                                                    type,
-                                                    heureDemande,
-                                                    heureDebut,
-                                                    heureFin
-                                                    )
-                                            );
-                        }); 
+                                let medium = $('<td />').html(consultation.mediumDenomination);
+                                let type = $('<td />').html(consultation.mediumType);
+                                let heureDemande = $('<td />').html(consultation.heureDemande);
+                                let heureDebut = $('<td />').html(consultation.heureDebut);
+                                let heureFin = $('<td />').html(consultation.heureFin);
+                                $('#consultationsTable')
+                                        .append(
+                                                $('<tr>')
+                                                .append(
+                                                        medium,
+                                                        type,
+                                                        heureDemande,
+                                                        heureDebut,
+                                                        heureFin
+                                                        )
+                                                );
+                            });
                         }
                     } else {
                         window.location.href = "login.html";
                     }
 
-                }); 
                 });
+            });
 
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
