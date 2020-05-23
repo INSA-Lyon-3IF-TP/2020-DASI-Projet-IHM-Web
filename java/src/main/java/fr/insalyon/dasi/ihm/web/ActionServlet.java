@@ -5,6 +5,7 @@ import fr.insalyon.dasi.ihm.web.action.Action;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.ConsultationsClientAction;
+import fr.insalyon.dasi.ihm.web.action.DeconnexionAction;
 import fr.insalyon.dasi.ihm.web.action.DemarrerConsultationAction;
 import fr.insalyon.dasi.ihm.web.action.GetConsultationEnAttenteAction;
 import fr.insalyon.dasi.ihm.web.action.GetConsultationEnCoursAction;
@@ -18,6 +19,7 @@ import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.PrendreRendezVousAction;
 import fr.insalyon.dasi.ihm.web.serialisation.ConsultationsClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.DeconnexionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DemarrerConsultationSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GetConsultationEnCoursSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GetPredictionsSerialisation;
@@ -120,6 +122,10 @@ public class ActionServlet extends HttpServlet {
                 case "getPredictions":
                     action = new GetPredictionsAction();
                     serialisation = new GetPredictionsSerialisation();
+                    break; 
+                case "logout":
+                    action = new DeconnexionAction();
+                    serialisation = new DeconnexionSerialisation();
                     break; 
                 case "...":
                     break;
