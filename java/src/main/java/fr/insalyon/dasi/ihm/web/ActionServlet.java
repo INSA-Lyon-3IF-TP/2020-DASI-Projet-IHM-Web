@@ -6,6 +6,8 @@ import fr.insalyon.dasi.ihm.web.action.AuthentifierClientAction;
 import fr.insalyon.dasi.ihm.web.action.AuthentifierEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.ConsultationsClientAction;
 import fr.insalyon.dasi.ihm.web.action.GetConsultationEnAttenteAction;
+import fr.insalyon.dasi.ihm.web.action.GetConsultationEnCoursAction;
+import fr.insalyon.dasi.ihm.web.action.GetPredictionsAction;
 import fr.insalyon.dasi.ihm.web.action.GetStatisticsAction;
 import fr.insalyon.dasi.ihm.web.serialisation.GetStatisticsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InfosConsultationSerialisation;
@@ -15,6 +17,8 @@ import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.PrendreRendezVousAction;
 import fr.insalyon.dasi.ihm.web.serialisation.ConsultationsClientSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.GetConsultationEnCoursSerialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.GetPredictionsSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GetProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.GetProfilEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.InscrireClientSerialisation;
@@ -103,6 +107,14 @@ public class ActionServlet extends HttpServlet {
                     action = new GetProfilEmployeAction();
                     serialisation = new GetProfilEmployeSerialisation();
                     break;
+                case "getConsultationEnCours":
+                    action = new GetConsultationEnCoursAction();
+                    serialisation = new GetConsultationEnCoursSerialisation();
+                    break;
+                case "getPredictions":
+                    action = new GetPredictionsAction();
+                    serialisation = new GetPredictionsSerialisation();
+                    break; 
                 case "...":
                     break;
             }
