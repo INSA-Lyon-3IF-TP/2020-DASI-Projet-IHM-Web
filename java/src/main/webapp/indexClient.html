@@ -69,8 +69,23 @@
                 dataType: 'json',
                 data: {'todo': 'listerMediums'}
             }).done(function (response) {
-                $('#main').empty();
-                console.log(response);
+                
+                if(response.connected){
+                    $('.navbar-right').empty();
+                    $('.navbar-right')
+                    .append(
+                        $('<li />')
+                        .attr('class', 'nav-item')
+                        .append(
+                            $('<a />')
+                            .attr('class', 'nav-link')
+                            .attr('href', "profilClient.html")
+                            .text("Profil Astral")
+                        )
+                    );
+                }
+                
+                
                 $('#nav-astro').append(
                     $('<table />')
                     .attr('id', 'astrologuesTable')
