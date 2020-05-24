@@ -43,6 +43,7 @@ public class GetProfilEmployeSerialisation extends Serialisation {
             jsonEmploye.addProperty("tel", employe.getTelephone());
             jsonEmploye.addProperty("adresse", employe.getAdresse());
             jsonEmploye.addProperty("mail", employe.getMail());
+            jsonEmploye.addProperty("occupe", employe.getEstOccupe());
 
 
             container.add("employe", jsonEmploye);
