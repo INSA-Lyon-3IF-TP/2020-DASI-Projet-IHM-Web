@@ -21,7 +21,9 @@ public class GetStatisticsSerialisation extends Serialisation {
 
         Boolean connexion = (employe != null);
         container.addProperty("connexion", connexion);
-        
+        if(employe != null){
+            container.addProperty("occupe", employe.getEstOccupe() ? Boolean.TRUE : Boolean.FALSE);
+        }
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
