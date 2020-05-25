@@ -37,8 +37,14 @@
                     <canvas id="canvas2"></canvas>
                 </div>
                 <div class="w-100"></div>
-                <div class="col center" id="case3">Column</div>
-                <div class="col center" id="case4">Column</div>
+                <div class="col center" id="case3">Column
+                    <canvas id="canvas3"></canvas>
+                </div>
+<!--                <div class="w-100"></div>
+                <div class="col center" id="case4">Column
+                    <canvas id="canvas4"></canvas>
+                </div>-->
+                <!--<div class="col center" id="case4">Column</div>-->
             </div>
         </div>
     </body>
@@ -115,7 +121,7 @@
                                         
                                         let ctx2 = document.getElementById('canvas2').getContext('2d');
                                         response.dataRepartitionClients.datasets[0].backgroundColor = backgroundColor;
-                                        let myBarChart = new Chart(ctx2, {
+                                        let nbClientsParEmploye = new Chart(ctx2, {
                                             type: 'bar',
                                             data: response.dataRepartitionClients,
                                             options: {
@@ -123,6 +129,25 @@
                                             }
                                         });
                                         
+                                        let ctx3 = document.getElementById('canvas3').getContext('2d');
+                                        response.dataAllMediums.datasets[0].backgroundColor = backgroundColor;
+                                        let nbConsultationsParMedium = new Chart(ctx3, {
+                                            type: 'bar',
+                                            data: response.dataAllMediums,
+                                            options: {
+                                                legend: false
+                                            }
+                                        });
+                                        /*
+                                        let ctx4 = document.getElementById('canvas4').getContext('2d');                                        
+                                        let allMediumsPie = new Chart(ctx4, {
+                                            type: 'pie',
+                                            data: response.dataAllMediums,
+                                            options: {
+                                                responsive: true
+                                            }
+                                        });
+                                        */
                                     }
                                 });
                             });

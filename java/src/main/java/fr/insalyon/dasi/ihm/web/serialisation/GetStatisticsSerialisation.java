@@ -32,6 +32,9 @@ public class GetStatisticsSerialisation extends Serialisation {
             JsonObject dataTop5 = topFiveMediums(orderedMediums);
             container.add("dataTop5", dataTop5);
         
+            JsonObject dataAllMediums = allMediums(orderedMediums);
+            container.add("dataAllMediums", dataAllMediums);
+            
             Map<Employe, Long> nombreClientsParEmploye = (Map<Employe, Long>) request.getAttribute("nombreClientsParEmploye");
             if(nombreClientsParEmploye != null){
                 JsonObject dataRepartitionClients = repartitionClients(nombreClientsParEmploye);
@@ -114,4 +117,30 @@ public class GetStatisticsSerialisation extends Serialisation {
         return dataRepartitionClients;
     }
     
+    public JsonObject allMediums(List<Medium> orderedMediums){
+        JsonObject dataAllMediums = new JsonObject();
+        JsonArray datasets = new JsonArray();
+        JsonObject dataObj = new JsonObject();
+        JsonArray data = new JsonArray();
+        JsonArray labels = new JsonArray();
+
+        for(Medium medium : orderedMediums){
+            if(medium.getConsultations() == null){
+                data.add(0);
+            }
+            else{
+                data.add(medium.getConsultations().size());
+            }
+            labels.add(medium.getDenomination());
+        }
+
+        dataObj.add("data", data);
+        datasets.add(dataObj);
+        dataAllMediums.add("datasets", datasets);
+        dataAllMediums.add("labels", labels);
+        
+        System.out.println(dataAllMediums);
+        
+        return dataAllMediums;        
+    }
 }
