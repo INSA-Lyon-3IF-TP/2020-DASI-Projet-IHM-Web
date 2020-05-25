@@ -30,10 +30,12 @@
         <div id="stats">insert stats here</div>
         <div class="container">
             <div class="row">
-                <div class="col center" id="case1">Column
+                <div class="col center" id="case1">Les 5 médiums les plus sollicités
                     <canvas id="canvas1"></canvas>
                 </div>
-                <div class="col center" id="case2">Column</div>
+                <div class="col center" id="case2">Répartition du nombre de clients <b>différents</b> par employé
+                    <canvas id="canvas2"></canvas>
+                </div>
                 <div class="w-100"></div>
                 <div class="col center" id="case3">Column</div>
                 <div class="col center" id="case4">Column</div>
@@ -55,6 +57,16 @@
                                     window.location = "loginEmploye.html";
                                 });
                             }
+
+                            window.chartColors = {
+                                red: 'rgb(255, 99, 132)',
+                                orange: 'rgb(255, 159, 64)',
+                                yellow: 'rgb(255, 205, 86)',
+                                green: 'rgb(75, 192, 192)',
+                                blue: 'rgb(54, 162, 235)',
+                                purple: 'rgb(153, 102, 255)',
+                                grey: 'rgb(201, 203, 207)'
+                            };
 
                             $(document).ready(function () {
                                 $.ajax({
@@ -83,21 +95,31 @@
                                         
                                         let ctx1 = document.getElementById('canvas1').getContext('2d');
                                         
-                                        let backgroundColor= [
-                                            'rgba(255, 99, 132, 0.8)',
-                                            'rgba(54, 162, 235, 0.8)',
-                                            'rgba(255, 206, 86, 0.8)',
-                                            'rgba(75, 192, 192, 0.8)',
-                                            'rgba(153, 102, 255, 0.8)'
-                                        ];
+                                        let backgroundColor = [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue
+					];
                                         
                                         response.dataTop5.datasets[0].backgroundColor = backgroundColor;
                                         
-                                        var top5Mediums = new Chart(ctx1, {
+                                        let top5Mediums = new Chart(ctx1, {
                                             type: 'pie',
                                             data: response.dataTop5,
                                             options: {
                                                 responsive: true
+                                            }
+                                        });
+                                        
+                                        let ctx2 = document.getElementById('canvas2').getContext('2d');
+                                        response.dataRepartitionClients.datasets[0].backgroundColor = backgroundColor;
+                                        let myBarChart = new Chart(ctx2, {
+                                            type: 'bar',
+                                            data: response.dataRepartitionClients,
+                                            options: {
+                                                legend: false
                                             }
                                         });
                                         

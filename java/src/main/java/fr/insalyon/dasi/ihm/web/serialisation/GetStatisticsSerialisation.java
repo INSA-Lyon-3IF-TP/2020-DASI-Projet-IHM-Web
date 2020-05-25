@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,11 +29,15 @@ public class GetStatisticsSerialisation extends Serialisation {
             container.addProperty("occupe", employe.getEstOccupe() ? Boolean.TRUE : Boolean.FALSE);
         
             List<Medium> orderedMediums = (List<Medium>) request.getAttribute("orderedmediums");
-
             JsonObject dataTop5 = topFiveMediums(orderedMediums);
-        
             container.add("dataTop5", dataTop5);
         
+            Map<Employe, Long> nombreClientsParEmploye = (Map<Employe, Long>) request.getAttribute("nombreClientsParEmploye");
+            if(nombreClientsParEmploye != null){
+                JsonObject dataRepartitionClients = repartitionClients(nombreClientsParEmploye);
+                container.add("dataRepartitionClients", dataRepartitionClients);
+            }
+            
         }
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -43,44 +48,70 @@ public class GetStatisticsSerialisation extends Serialisation {
 
     public JsonObject topFiveMediums(List<Medium> orderedMediums){
         JsonObject dataTop5 = new JsonObject();
-            JsonArray datasets = new JsonArray();
-            JsonObject dataObj = new JsonObject();
-            JsonArray data = new JsonArray();
-            JsonArray labels = new JsonArray();
-            
-            int i = 0;
-            for(; i < 5 && i < orderedMediums.size(); ++i){
-                Medium medium = orderedMediums.get(i);
-                if(medium.getConsultations() == null){
-                    data.add(0);
-                }
-                else{
-                    data.add(medium.getConsultations().size());
-                }
-                labels.add(medium.getDenomination());
-            }
-            
-            dataObj.add("data", data);
-            datasets.add(dataObj);
-            dataTop5.add("datasets", datasets);
-            dataTop5.add("labels", labels);
-            
-            
-            /*
-            dataTop5 = {
-                datasets: [{
-                    data: [10, 20, 30]
-                }],
+        JsonArray datasets = new JsonArray();
+        JsonObject dataObj = new JsonObject();
+        JsonArray data = new JsonArray();
+        JsonArray labels = new JsonArray();
 
-                // These labels appear in the legend and in the tooltips when hovering different arcs
-                labels: [
-                    'Red',
-                    'Yellow',
-                    'Blue'
-                ]
-            };
-             */
-            return dataTop5;
+        int i = 0;
+        for(; i < 5 && i < orderedMediums.size(); ++i){
+            Medium medium = orderedMediums.get(i);
+            if(medium.getConsultations() == null){
+                data.add(0);
+            }
+            else{
+                data.add(medium.getConsultations().size());
+            }
+            labels.add(medium.getDenomination());
+        }
+
+        dataObj.add("data", data);
+        datasets.add(dataObj);
+        dataTop5.add("datasets", datasets);
+        dataTop5.add("labels", labels);
+
+
+        /*
+        dataTop5 = {
+            datasets: [{
+                data: [10, 20, 30]
+            }],
+
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: [
+                'Red',
+                'Yellow',
+                'Blue'
+            ]
+        };
+         */
+        return dataTop5;
+    }
+    
+    public JsonObject repartitionClients(Map<Employe, Long> nombreClientsParEmploye){
+        JsonObject dataRepartitionClients = new JsonObject();
+        JsonArray datasets = new JsonArray();
+        JsonObject dataObj = new JsonObject();
+        JsonArray data = new JsonArray();
+        JsonArray labels = new JsonArray();
+
+        for (Map.Entry mapentry : nombreClientsParEmploye.entrySet()) {
+            System.out.println("clé: "+mapentry.getKey() + " | valeur: " + mapentry.getValue());
+        
+            Employe employe = (Employe) mapentry.getKey();
+            
+            data.add(mapentry.getValue().toString());
+            labels.add(employe.getPrenom() + " " + employe.getNom());
+        }
+
+        dataObj.add("data", data);
+        datasets.add(dataObj);
+        dataRepartitionClients.add("datasets", datasets);
+        dataRepartitionClients.add("labels", labels);
+        
+        System.out.println(dataRepartitionClients);
+        
+        return dataRepartitionClients;
     }
     
 }

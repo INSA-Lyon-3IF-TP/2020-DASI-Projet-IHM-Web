@@ -30,6 +30,10 @@ public class GetStatisticsAction extends Action {
 
                 request.setAttribute("orderedmediums", mediums);
             }
+            
+            Map<Employe, Long> nombreClientsParEmploye = service.repartitionClientsParEmploye();
+            request.setAttribute("nombreClientsParEmploye", nombreClientsParEmploye);
+
         }
         request.setAttribute("employe", employe);
     }
