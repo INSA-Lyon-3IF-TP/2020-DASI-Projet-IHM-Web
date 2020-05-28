@@ -20,8 +20,6 @@
             </div>
         </nav>
         <br/>
-        <!-- Paragraphe avec id="notification" pour les messages de notification -->
-        <p id="notification"></p>
 
         <div class="container" style="text-align:center">
             <form>
@@ -43,8 +41,8 @@
                     console.log("clic sur le bouton de connexion"); // LOG dans Console Javascript
 
                     // Récupération de la valeur des champs du formulaire
-                    var champLogin = $('#champ-login').val();
-                    var champPassword = $('#champ-password').val();
+                    let champLogin = $('#champ-login').val();
+                    let champPassword = $('#champ-password').val();
 
                     // Appel AJAX
                     $.ajax({
