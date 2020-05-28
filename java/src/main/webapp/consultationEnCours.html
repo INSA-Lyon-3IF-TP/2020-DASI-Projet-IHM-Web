@@ -27,6 +27,8 @@ and open the template in the editor.
         <br/>
         <h1 style="text-align: center">Consultation en cours</h1>
         <br/>
+        <div style="text-align: center"><h2>Médium à incarner : <span id="medium"></span></h2></div>
+        <br/>
         <section style="width:95%; height: 75%; margin: auto; display:flex">
             <div style="width:50%; border: 3px solid black; text-align: center">
                 <h2>Demander une prédiction</h2>
@@ -83,6 +85,8 @@ and open the template in the editor.
                 if (!response.connexion) {
                     window.location = "loginEmploye.html";
                 } else {
+                    console.log(response);
+                    $('#medium').text(response.mediumDenomination + ", " + response.mediumType);
                     $('#commentaire').html(response.consultation.commentaire);
                 }
             });

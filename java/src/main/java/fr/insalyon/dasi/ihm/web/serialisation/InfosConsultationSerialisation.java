@@ -87,7 +87,7 @@ public class InfosConsultationSerialisation extends Serialisation {
                             jsonConsultation.addProperty("heureFin", "---");
                         }
                         if (cons.getCommentaire() != null) {
-                            jsonConsultation.addProperty("commmentaire", cons.getCommentaire());
+                            jsonConsultation.addProperty("commentaire", cons.getCommentaire());
                         } else {
                             jsonConsultation.addProperty("commmentaire", "---");
                         }
@@ -111,6 +111,15 @@ public class InfosConsultationSerialisation extends Serialisation {
                 
                 container.add("client", jsonClient);
                 container.add("profilAstral", jsonProfilAstral);
+                container.addProperty("mediumDenomination",consultation.getMedium().getDenomination());
+                if (consultation.getMedium() instanceof Astrologue) {
+                    container.addProperty("mediumType", "Astrologue");
+                } else if (consultation.getMedium() instanceof Cartomancien) {
+                    container.addProperty("mediumType", "Cartomancien");
+                } else if (consultation.getMedium() instanceof Spirite) {
+                    container.addProperty("mediumType", "Spirite");
+                }
+                container.addProperty("mediumPresentation",consultation.getMedium().getPresentation());
             }
         }
 

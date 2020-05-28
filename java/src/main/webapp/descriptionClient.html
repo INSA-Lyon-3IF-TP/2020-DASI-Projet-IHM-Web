@@ -28,6 +28,8 @@
             </div>
         </nav>
         <br/>
+        
+        <div style="text-align: center"><h1>Médium à incarner : <span id="medium"></span></h1></div>
 
         <section style="width:95%; border: 3px solid green; margin: auto; display:flex">
             <div style="width:33%; border: 3px solid red; text-align: center">
@@ -114,13 +116,14 @@
                     dataType: 'json',
                     data: {'todo': 'getConsultationEnAttente'}
                 }).done(function (response) {
+                    console.log(response);
                     if (!response.connexion) {
                         window.location = "loginEmploye.html";
                     } else if (!response.client) { //Si aucune consultation en cours pour l'employe courant
-                        //window.location = "dashboard.html";
-                        //uncomment this
+                        window.location = "dashboard.html";
                     } else {
 
+                        $('#medium').text(response.mediumDenomination + ", " + response.mediumType);
                         $('#civilite').attr('value', response.client.civilite);
                         $('#nom').attr('value', response.client.nom);
                         $('#prenom').attr('value', response.client.prenom);

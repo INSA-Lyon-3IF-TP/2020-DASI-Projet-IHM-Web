@@ -8,8 +8,11 @@ package fr.insalyon.dasi.ihm.web.serialisation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import fr.insalyon.dasi.metier.modele.Astrologue;
+import fr.insalyon.dasi.metier.modele.Cartomancien;
 import fr.insalyon.dasi.metier.modele.Consultation;
 import fr.insalyon.dasi.metier.modele.Employe;
+import fr.insalyon.dasi.metier.modele.Spirite;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -36,12 +39,21 @@ public class GetConsultationEnCoursSerialisation extends Serialisation{
         JsonObject consultationJson = new JsonObject();
         if(consultation != null && employe!=null){  
             consultationJson.addProperty("commentaire",consultation.getCommentaire());
+            container.addProperty("mediumDenomination",consultation.getMedium().getDenomination());
+            if (consultation.getMedium() instanceof Astrologue) {
+                container.addProperty("mediumType", "Astrologue");
+            } else if (consultation.getMedium() instanceof Cartomancien) {
+                container.addProperty("mediumType", "Cartomancien");
+            } else if (consultation.getMedium() instanceof Spirite) {
+                container.addProperty("mediumType", "Spirite");
+            }
+            container.addProperty("mediumPresentation",consultation.getMedium().getPresentation());
         } else
         {
             consultationJson.addProperty("commentaire","Pas de consultation en cours");
         }
         container.add("consultation", consultationJson);
-        
+
         sendJson(response,container);
     }
     
