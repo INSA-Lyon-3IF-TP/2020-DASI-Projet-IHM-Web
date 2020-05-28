@@ -21,26 +21,29 @@
         </nav>
         <br/>
 
-        <!-- Paragraphe avec id="notification" pour les messages de notification -->
-        <p id="notification">Veuillez saisir votre identifiant (adresse mail) et votre mot de passe.</p>
-        
-        <!-- Champs et Bouton de Formulaire -->
-        Identifiant: <input type="text" id="email" size="40" />
-        <br/>
-        Mot de passe: <input type="password" id="motdepasse" />
-        <br/>
-        <button id="bouton-connexion">Connexion</button>
+        <div class="container" style="text-align:center">
+            <form>
+                <div class="form-group">
+                    <label for="champ-login">Adresse email</label>
+                    <input type="email" class="form-control" id="champ-login" aria-describedby="emailHelp" placeholder="Saisir votre email">
+                </div>
+                <div class="form-group">
+                    <label for="champ-password">Mot de passe</label>
+                    <input type="password" class="form-control" id="champ-password" placeholder="Saisir votre mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary" id="bouton-connexion">Se connecter</button>
+            </form>
+        </div>
         
         <script>
             $(document).ready( function () {
                 $('#bouton-connexion').on( 'click', function () { // Fonction appelée lors du clic sur le bouton
 
                     console.log("clic sur le bouton de connexion"); // LOG dans Console Javascript
-                    $('#notification').html("Connexion..."); // Message pour le paragraphe de notification
 
                     // Récupération de la valeur des champs du formulaire
-                    var champLogin = $('#email').val();
-                    var champPassword = $('#motdepasse').val();
+                    let champLogin = $('#champ-login').val();
+                    let champPassword = $('#champ-password').val();
 
                     // Appel AJAX
                     $.ajax({
@@ -59,7 +62,7 @@
                             window.location = "descriptionClient.html";
                         }
                         else {
-                            $('#notification').html("Erreur de Connexion"); // Message pour le paragraphe de notification
+                            alert("Erreur de Connexion");
                         }
                     })
                     .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
@@ -69,6 +72,7 @@
                     .always( function () { // Fonction toujours appelée
                         
                     });
+                    return false;
                 });
             });
         </script><script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
