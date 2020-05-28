@@ -27,7 +27,6 @@
             </div>
         </nav>
         <br/>
-        <div id="stats">insert stats here</div>
         <div class="container">
             <div class="row">
                 <div class="col center" id="case1">Les 5 médiums les plus sollicités
@@ -84,7 +83,6 @@
                                     if (!response.connexion) {
                                         window.location = "loginEmploye.html";
                                     } else {
-                                        $('#stats').html("stats to come");
                                         if (response.occupe) {
                                             $('.navbar-right')
                                                     .prepend(

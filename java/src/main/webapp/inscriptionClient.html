@@ -24,34 +24,52 @@ and open the template in the editor.
             </div>
         </nav>
         <br/>
-
-        <!-- Paragraphe avec id="notification" pour les messages de notification -->
-        <p id="notification">Veuillez remplir le formulaire ci-dessous.</p>
         
-        <!-- Champs et Bouton de Formulaire -->
-        Nom : <input type="text" id="champ-nom" />
-        <br/>
-        Prenom : <input type="text" id="champ-prenom" />
-        <br/>
-        Email : <input type="email" id="champ-mail" />
-        <br/>
-        Date de naissance : <input type="date" id="champ-date" />
-        <br/>
-        Civilité : <input type="text" id="champ-civilite" />
-        <br/>
-        Téléphone : <input type="tel" id="champ-telephone" />
-        <br/>
-        Adresse : <input type="text" id="champ-adresse" />
-        <br/>
-        Mot de passe : <input type="password" id="champ-password" />
-        <br/>
-        Confirmation mot de passe : <input type="password" id="champ-password-confirmation" />
-        <br/>
-        <button id="bouton-inscirption">Inscription</button>
+        <div class="container" style="text-align:center">
+            <form>
+                <div class="form-group">
+                    <label for="champ-civilite">Civilité</label>
+                    <input type="text" class="form-control" id="champ-civilite" placeholder="Saisir votre civilité">
+                </div>
+                <div class="form-group">
+                    <label for="champ-nom">Nom</label>
+                    <input type="text" class="form-control" id="champ-nom" placeholder="Saisir votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="champ-prenom">Prénom</label>
+                    <input type="text" class="form-control" id="champ-prenom" placeholder="Saisir votre prénom">
+                </div>
+                <div class="form-group">
+                    <label for="champ-mail">Adresse email</label>
+                    <input type="email" class="form-control" id="champ-mail" placeholder="Saisir votre email">
+                </div>
+                <div class="form-group">
+                    <label for="champ-date">Date de naissance</label>
+                    <input type="date" class="form-control" id="champ-date" placeholder="Saisir votre date de naissance">
+                </div>
+                <div class="form-group">
+                    <label for="champ-telephone">Téléphone</label>
+                    <input type="tel" class="form-control" id="champ-telephone" placeholder="Saisir votre numéro de téléphone">
+                </div>
+                <div class="form-group">
+                    <label for="champ-adresse">Adresse</label>
+                    <input type="text" class="form-control" id="champ-adresse" placeholder="Saisir votre adresse">
+                </div>
+                <div class="form-group">
+                    <label for="champ-password">Mot de passe</label>
+                    <input type="password" class="form-control" id="champ-password" placeholder="Saisir votre mot de passe">
+                </div>
+                <div class="form-group">
+                    <label for="champ-password-confirmation">Confirmation du mot de passe</label>
+                    <input type="password" class="form-control" id="champ-password-confirmation" placeholder="Saisir votre mot de passe de nouveau">
+                </div>
+                <button type="submit" class="btn btn-primary" id="bouton-inscription">S'inscrire</button>
+            </form>
+        </div>
         
         <script>
             $(document).ready( function () {
-                $('#bouton-inscirption').on( 'click', function () { // Fonction appelée lors du clic sur le bouton
+                $('#bouton-inscription').on('click', function () { // Fonction appelée lors du clic sur le bouton
 
                     console.log("clic sur le bouton de insciption"); // LOG dans Console Javascript
 
@@ -83,7 +101,7 @@ and open the template in the editor.
                         || champPassword.length === 0) //Vérification côté client
                     {
                         alert("Tous les champs doivent être remplis");
-                        return; 
+                        return false; 
                     }
                     // Appel AJAX
                     $.ajax({
@@ -106,11 +124,11 @@ and open the template in the editor.
                     .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
                         console.log('Response',response); // LOG dans Console Javascript
                         if (response.inscription) {
-                            $('#notification').html("Inscription OK");  // Message pour le paragraphe de notification
+                            alert("Succès de l'inscription");
                             window.location.href = "login.html";
                         }
                         else {
-                            $('#notification').html("Erreur d'Inscription"); // Message pour le paragraphe de notification
+                            alert("Erreur d'Inscription");
                         }
                     })
                     .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
@@ -120,6 +138,7 @@ and open the template in the editor.
                     .always( function () { // Fonction toujours appelée
                         
                     });
+                    return false;
                 });
             });
         </script>
