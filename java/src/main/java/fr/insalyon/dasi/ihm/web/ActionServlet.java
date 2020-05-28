@@ -18,6 +18,7 @@ import fr.insalyon.dasi.ihm.web.action.GetProfilEmployeAction;
 import fr.insalyon.dasi.ihm.web.action.InscrireClientAction;
 import fr.insalyon.dasi.ihm.web.action.ListMediumsAction;
 import fr.insalyon.dasi.ihm.web.action.PrendreRendezVousAction;
+import fr.insalyon.dasi.ihm.web.action.TerminerConsultationAction;
 import fr.insalyon.dasi.ihm.web.serialisation.ConsultationsClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DeconnexionSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.DemarrerConsultationSerialisation;
@@ -31,6 +32,7 @@ import fr.insalyon.dasi.ihm.web.serialisation.PrendreRendezVousSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilClientSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.ProfilEmployeSerialisation;
 import fr.insalyon.dasi.ihm.web.serialisation.Serialisation;
+import fr.insalyon.dasi.ihm.web.serialisation.TerminerConsultationSerialisation;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -127,6 +129,10 @@ public class ActionServlet extends HttpServlet {
                     action = new DeconnexionAction();
                     serialisation = new DeconnexionSerialisation();
                     break; 
+                case "terminerConsultation":
+                    action = new TerminerConsultationAction();
+                    serialisation = new TerminerConsultationSerialisation();
+                    break;
                 case "...":
                     break;
             }
