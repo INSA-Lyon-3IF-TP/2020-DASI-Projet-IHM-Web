@@ -73,129 +73,129 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
         <script>
 
-                            function disconnect() {
-                                $.ajax({
-                                    url: 'ActionServlet',
-                                    method: 'get',
-                                    dataType: 'json',
-                                    data: {'todo': 'logout'}
-                                }).done(function (response) {
-                                    if (!response.success) {
-                                        alert('Erreur de déconnexion');
-                                    }
-                                    window.location = "loginEmploye.html";
-                                });
-                            }
-                            function demarrerConsultation() {
-                                let confirmation = confirm("Êtes-vous sûr(e) de vouloir démarrer la consultation ?");
-                                if (confirmation !== true) {
-                                    return;
-                                }
+            function disconnect() {
+                $.ajax({
+                    url: 'ActionServlet',
+                    method: 'get',
+                    dataType: 'json',
+                    data: {'todo': 'logout'}
+                }).done(function (response) {
+                    if (!response.success) {
+                        alert('Erreur de déconnexion');
+                    }
+                    window.location = "loginEmploye.html";
+                });
+            }
+            function demarrerConsultation() {
+                let confirmation = confirm("Êtes-vous sûr(e) de vouloir démarrer la consultation ?");
+                if (confirmation !== true) {
+                    return;
+                }
 
-                                $.ajax({
-                                    url: 'ActionServlet',
-                                    method: 'get',
-                                    dataType: 'json',
-                                    data: {'todo': 'demarrerConsultation'}
-                                }).done(function (response) {
-                                    if (response.success) {
-                                        window.location = "consultationEnCours.html";
-                                    } else {
-                                        alert("Une erreur s'est produite. Veuillez réessayer.");
-                                    }
-                                });
+                $.ajax({
+                    url: 'ActionServlet',
+                    method: 'get',
+                    dataType: 'json',
+                    data: {'todo': 'demarrerConsultation'}
+                }).done(function (response) {
+                    if (response.success) {
+                        window.location = "consultationEnCours.html";
+                    } else {
+                        alert("Une erreur s'est produite. Veuillez réessayer.");
+                    }
+                });
 
-                            }
+            }
 
-                            $(document).ready(function () {
-                                $.ajax({
-                                    url: 'ActionServlet',
-                                    method: 'get',
-                                    dataType: 'json',
-                                    data: {'todo': 'getConsultationEnAttente'}
-                                }).done(function (response) {
-                                    if (!response.connexion) {
-                                        window.location = "loginEmploye.html";
-                                    } else if (!response.client) { //Si aucune consultation en cours pour l'employe courant
-                                        //window.location = "dashboard.html";
-                                        //uncomment this
-                                    } else {
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'ActionServlet',
+                    method: 'get',
+                    dataType: 'json',
+                    data: {'todo': 'getConsultationEnAttente'}
+                }).done(function (response) {
+                    if (!response.connexion) {
+                        window.location = "loginEmploye.html";
+                    } else if (!response.client) { //Si aucune consultation en cours pour l'employe courant
+                        //window.location = "dashboard.html";
+                        //uncomment this
+                    } else {
 
-                                        $('#civilite').attr('value', response.client.civilite);
-                                        $('#nom').attr('value', response.client.nom);
-                                        $('#prenom').attr('value', response.client.prenom);
-                                        $('#dateDeNaissance').attr('value', response.client.dateDeNaissance);
-                                        $('#telephone').attr('value', response.client.telephone);
-                                        $('#mail').attr('value', response.client.mail);
-                                        $('#signeZodiaque').attr('value', response.profilAstral.signeZodiaque);
-                                        $('#signeChinois').attr('value', response.profilAstral.signeChinois);
-                                        $('#animal').attr('value', response.profilAstral.animal);
-                                        $('#couleur').attr('value', response.profilAstral.couleur);
+                        $('#civilite').attr('value', response.client.civilite);
+                        $('#nom').attr('value', response.client.nom);
+                        $('#prenom').attr('value', response.client.prenom);
+                        $('#dateDeNaissance').attr('value', response.client.dateDeNaissance);
+                        $('#telephone').attr('value', response.client.telephone);
+                        $('#mail').attr('value', response.client.mail);
+                        $('#signeZodiaque').attr('value', response.profilAstral.signeZodiaque);
+                        $('#signeChinois').attr('value', response.profilAstral.signeChinois);
+                        $('#animal').attr('value', response.profilAstral.animal);
+                        $('#couleur').attr('value', response.profilAstral.couleur);
 
 
-                                        $('#historique')
+                        $('#historique')
+                                .append(
+                                        $('<table />')
+                                        .attr('id', 'consultationsTable')
+                                        .attr('class', 'table')
+                                        .append(
+                                                $('<thead />')
+                                                )
+                                        .append(
+                                                $('<tr />')
                                                 .append(
-                                                        $('<table />')
-                                                        .attr('id', 'consultationsTable')
-                                                        .attr('class', 'table')
-                                                        .append(
-                                                                $('<thead />')
-                                                                )
-                                                        .append(
-                                                                $('<tr />')
-                                                                .append(
-                                                                        $('<th />')
-                                                                        .attr('scope', 'col')
-                                                                        .text('Employe'),
-                                                                        $('<th />')
-                                                                        .attr('scope', 'col')
-                                                                        .text('Medium'),
-                                                                        $('<th />')
-                                                                        .attr('scope', 'col')
-                                                                        .text('Type'),
-                                                                        $('<th />')
-                                                                        .attr('scope', 'col')
-                                                                        .text('Heure de demande'),
-                                                                        $('<th />')
-                                                                        .attr('scope', 'col')
-                                                                        .text('Heure de début'),
-                                                                        $('<th />')
-                                                                        .attr('scope', 'col')
-                                                                        .text('Heure de fin'),
-                                                                        $('<th />')
-                                                                        .attr('scope', 'col')
-                                                                        .text('Commentaire')
-                                                                        )
-                                                                )
-                                                        );
-                                        response.historiqueClient.forEach(function (consultation) {
-                                            let employe = $('<td />').html(consultation.employe);
-                                            let medium = $('<td />').html(consultation.mediumDenomination);
-                                            let type = $('<td />').html(consultation.mediumType);
-                                            let heureDemande = $('<td />').html(consultation.heureDemande);
-                                            let heureDebut = $('<td />').html(consultation.heureDebut);
-                                            let heureFin = $('<td />').html(consultation.heureFin);
-                                            let commentaire = $('<td />').html(consultation.commentaire);
+                                                        $('<th />')
+                                                        .attr('scope', 'col')
+                                                        .text('Employe'),
+                                                        $('<th />')
+                                                        .attr('scope', 'col')
+                                                        .text('Medium'),
+                                                        $('<th />')
+                                                        .attr('scope', 'col')
+                                                        .text('Type'),
+                                                        $('<th />')
+                                                        .attr('scope', 'col')
+                                                        .text('Heure de demande'),
+                                                        $('<th />')
+                                                        .attr('scope', 'col')
+                                                        .text('Heure de début'),
+                                                        $('<th />')
+                                                        .attr('scope', 'col')
+                                                        .text('Heure de fin'),
+                                                        $('<th />')
+                                                        .attr('scope', 'col')
+                                                        .text('Commentaire')
+                                                        )
+                                                )
+                                        );
+                        response.historiqueClient.forEach(function (consultation) {
+                            let employe = $('<td />').html(consultation.employe);
+                            let medium = $('<td />').html(consultation.mediumDenomination);
+                            let type = $('<td />').html(consultation.mediumType);
+                            let heureDemande = $('<td />').html(consultation.heureDemande);
+                            let heureDebut = $('<td />').html(consultation.heureDebut);
+                            let heureFin = $('<td />').html(consultation.heureFin);
+                            let commentaire = $('<td />').html(consultation.commentaire);
 
-                                            $('#consultationsTable')
-                                                    .append(
-                                                            $('<tr />')
-                                                            .append(
-                                                                    employe,
-                                                                    medium,
-                                                                    type,
-                                                                    heureDemande,
-                                                                    heureDebut,
-                                                                    heureFin,
-                                                                    commentaire
-                                                                    )
-                                                            );
-                                        });
-                                    }
-                                });
+                            $('#consultationsTable')
+                                    .append(
+                                            $('<tr />')
+                                            .append(
+                                                    employe,
+                                                    medium,
+                                                    type,
+                                                    heureDemande,
+                                                    heureDebut,
+                                                    heureFin,
+                                                    commentaire
+                                                    )
+                                            );
+                        });
+                    }
+                });
 
-                                $('#demarrerConsultation').click(demarrerConsultation);
-                            });
+                $('#demarrerConsultation').on("click" , demarrerConsultation);
+            });
         </script>
     </body>
 

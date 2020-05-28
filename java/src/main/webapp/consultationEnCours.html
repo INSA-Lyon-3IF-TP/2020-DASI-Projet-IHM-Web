@@ -132,6 +132,36 @@ and open the template in the editor.
 
                 });
             });
+            
+            $("#terminerConsultation").on("click", function(){
+                var commentaire = $.trim($("#commentaire").val());
+                                
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        'todo': 'terminerConsultation',
+                        'commentaire': commentaire
+                    },
+                    dataType: 'json'
+                })
+                .done( function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                    console.log('Response',response); // LOG dans Console Javascript
+                    if (!response.connexion) {
+                        window.location = "loginEmploye.html";
+                    }
+                    else {
+                        window.location = "dashboard.html";
+                    }
+                })
+                .fail( function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                    console.log('Error',error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                })
+                .always( function () { // Fonction toujours appelée
+
+                });
+            });
         });
         
     </script>
