@@ -46,7 +46,7 @@ $(document).ready(function () {
             window.location = "dashboard.html";
         } else {
 
-            $('#medium').text(response.mediumDenomination + ", " + response.mediumType);
+            $('#medium').text(response.mediumAIncarner.mediumDenomination + ", " + response.mediumAIncarner.mediumType);
             $('#civilite').attr('value', response.client.civilite);
             $('#nom').attr('value', response.client.nom);
             $('#prenom').attr('value', response.client.prenom);
@@ -64,6 +64,7 @@ $(document).ready(function () {
                             $('<table />')
                             .attr('id', 'consultationsTable')
                             .attr('class', 'table')
+                            .attr('style', 'width: 95%; margin: auto; display: inline-block; overflow-y: auto; height: 500px;')
                             .append(
                                     $('<thead />')
                                     )

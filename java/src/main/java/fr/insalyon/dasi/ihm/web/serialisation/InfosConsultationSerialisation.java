@@ -111,15 +111,17 @@ public class InfosConsultationSerialisation extends Serialisation {
                 
                 container.add("client", jsonClient);
                 container.add("profilAstral", jsonProfilAstral);
-                container.addProperty("mediumDenomination",consultation.getMedium().getDenomination());
+                JsonObject mediumAIncarnerJson = new JsonObject();
+                mediumAIncarnerJson.addProperty("mediumDenomination",consultation.getMedium().getDenomination());
                 if (consultation.getMedium() instanceof Astrologue) {
-                    container.addProperty("mediumType", "Astrologue");
+                    mediumAIncarnerJson.addProperty("mediumType", "Astrologue");
                 } else if (consultation.getMedium() instanceof Cartomancien) {
-                    container.addProperty("mediumType", "Cartomancien");
+                    mediumAIncarnerJson.addProperty("mediumType", "Cartomancien");
                 } else if (consultation.getMedium() instanceof Spirite) {
-                    container.addProperty("mediumType", "Spirite");
+                    mediumAIncarnerJson.addProperty("mediumType", "Spirite");
                 }
-                container.addProperty("mediumPresentation",consultation.getMedium().getPresentation());
+                mediumAIncarnerJson.addProperty("mediumPresentation",consultation.getMedium().getPresentation());
+                container.add("mediumAIncarner", mediumAIncarnerJson);
             }
         }
 
