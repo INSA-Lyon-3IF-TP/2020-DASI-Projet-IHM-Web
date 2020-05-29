@@ -46,7 +46,7 @@ $(document).ready(function () {
             window.location = "dashboard.html";
         } else {
 
-            $('#medium').text(response.mediumDenomination + ", " + response.mediumType);
+            $('#medium').text(response.mediumAIncarner.mediumDenomination + ", " + response.mediumAIncarner.mediumType);
             $('#civilite').attr('value', response.client.civilite);
             $('#nom').attr('value', response.client.nom);
             $('#prenom').attr('value', response.client.prenom);
