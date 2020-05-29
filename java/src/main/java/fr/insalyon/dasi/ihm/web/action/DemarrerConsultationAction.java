@@ -22,11 +22,15 @@ public class DemarrerConsultationAction extends Action{
             employe = service.rechercherEmployeParId(idEmploye);
             
             List<Consultation> consultations = employe.getConsultations();
+            System.out.println(consultations);
             if(consultations.size() > 0){
-                Collections.sort(consultations, (Consultation consultation1, Consultation consultation2) -> consultation1.getHeureDebut().compareTo(consultation2.getHeureDebut()));
+                //Collections.sort(consultations, (Consultation consultation1, Consultation consultation2) -> consultation2.getHeureDebut().compareTo(consultation1.getHeureDebut()));
 
-                consultation = consultations.get(0);
+                consultation = consultations.get(consultations.size()-1);
+                System.out.println(consultation);
                 service.debuterConsultation(consultation);
+                System.out.println(consultation);
+                
             }            
         }    
         request.setAttribute("consultation", consultation);    
