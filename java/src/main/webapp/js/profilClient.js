@@ -58,7 +58,7 @@ $("#historique").on("click", function () {
         $('#consultations').append(
                 $('<div />')
                 .attr('id', 'historique')
-                .attr('style', 'width: 90%')
+                .attr('style', 'width: 100%; margin: auto; display: inline-block; overflow-y: auto; height: 600px;')
                 .append(
                         $('<table />')
                         .attr('id', 'consultationsTable')

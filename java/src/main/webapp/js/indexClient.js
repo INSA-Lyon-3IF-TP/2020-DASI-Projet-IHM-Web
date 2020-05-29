@@ -7,6 +7,7 @@ function prendreRDV(idMedium) {
         }).done(function (response) {
             if (response.success) {
                 alert("La demande de rendez-vous a bien été prise en compte");
+                window.location = "profilClient.html";
                 //TODO éventuellement rediriger
             } else {
                 alert("Malheureusement, ce médium n'est pas disponible. Veuillez réessayer plus tard");

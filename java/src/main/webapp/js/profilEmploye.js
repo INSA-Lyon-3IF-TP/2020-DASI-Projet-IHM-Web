@@ -48,7 +48,7 @@ $(document).ready(function () {
                     $('#consultations').append(
                             $('<div />')
                             .attr('id', 'historique')
-                            .attr('style', 'width: 100%')
+                            .attr('style', 'width: 100%; margin: auto; display: inline-block; overflow-y: auto; height: 500px;')
                             .append(
                                     $('<table />')
                                     .attr('id', 'consultationsTable')
