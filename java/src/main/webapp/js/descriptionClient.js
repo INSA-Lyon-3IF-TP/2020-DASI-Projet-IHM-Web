@@ -64,6 +64,7 @@ $(document).ready(function () {
                             $('<table />')
                             .attr('id', 'consultationsTable')
                             .attr('class', 'table')
+                            .attr('style', 'width: 95%; margin: auto; display: inline-block; overflow-y: auto; height: 500px;')
                             .append(
                                     $('<thead />')
                                     )
